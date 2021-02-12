@@ -9,6 +9,7 @@ import subprocess
 
 
 def run_command(command):
+    ''' return the stdout od command'''
     output, _ = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, shell=True).communicate()
     return output.decode("utf-8").rstrip('\r\n')
 
@@ -34,3 +35,24 @@ def get_password(ssid):
         sys.exit(1)
     return password
 
+def generate_qr(ssid, password):
+    ''' generate qr code'''
+    
+    qr_text = f"WIFI:T:WPA;S:{ssid};P:{password};;"
+    qr = qrcode.QRCode(version=1,
+                       error_correction=qrcode.constants.ERROR_CORRECT_L,
+                       box_size=8,
+                       border=4)
+    qr.add_data(qr_text)
+    qr.make()
+    qr.print_tty()
+   
+def main():
+    ssid = get_ssid()
+    password = get_password(ssid)
+    generate_qr(ssid,password)
+
+
+main()    
+
+   
