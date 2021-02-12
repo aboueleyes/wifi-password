@@ -59,5 +59,5 @@ def main():
     generate_qr(ssid, password)
 
 
-if if __name__ == "__main__":
+if  __name__ == "__main__":
     main()
